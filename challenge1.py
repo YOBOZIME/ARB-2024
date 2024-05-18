@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-import RPi.GPIO as GPIO
+import rpi.gpio as GPIO
 import time
 
 # Define GPIO pins for each motor
