@@ -80,6 +80,8 @@ def detect_color(cap, target_color):
 
 def main():
     cap = cv2.VideoCapture(0)
+    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
+    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
     
     print("Line Follower Robot - Color Detection")
     print("Press 'q' to quit")
@@ -118,5 +120,5 @@ def main():
     cap.release()
     cv2.destroyAllWindows()
 
-if _name_ == "_main_":
+if __name__ == "__main__":
     main()
