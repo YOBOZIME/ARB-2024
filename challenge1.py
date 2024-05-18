@@ -1,63 +1,39 @@
 import cv2
 import numpy as np
-import rpi.gpio as GPIO
+from gpiozero import Motor
 import time
 
-# Define GPIO pins for each motor
-motor1_pin1 = 3
-motor1_pin2 = 4
-motor2_pin1 = 17
-motor2_pin2 = 27
-
-# Set up GPIO mode
-GPIO.setmode(GPIO.BCM)
-GPIO.setwarnings(False)
-
-# Set up GPIO pins as outputs
-GPIO.setup(motor1_pin1, GPIO.OUT)
-GPIO.setup(motor1_pin2, GPIO.OUT)
-GPIO.setup(motor2_pin1, GPIO.OUT)
-GPIO.setup(motor2_pin2, GPIO.OUT)
-
-# Function to set motor direction and speed
-def set_motor_speed(motor, speed):
-    if speed > 0:
-        GPIO.output(motor[0], GPIO.HIGH)
-        GPIO.output(motor[1], GPIO.LOW)
-    elif speed < 0:
-        GPIO.output(motor[0], GPIO.LOW)
-        GPIO.output(motor[1], GPIO.HIGH)
-    else:
-        GPIO.output(motor[0], GPIO.LOW)
-        GPIO.output(motor[1], GPIO.LOW)
+# Define motors using GPIO pins
+motor_left = Motor(forward=3, backward=4)
+motor_right = Motor(forward=17, backward=27)
 
 # Function to move the robot forward
 def move_forward():
-    set_motor_speed((motor1_pin1, motor1_pin2), 100)
-    set_motor_speed((motor2_pin1, motor2_pin2), 100)
+    motor_left.forward()
+    motor_right.forward()
 
 # Function to move the robot backward
 def move_backward():
-    set_motor_speed((motor1_pin1, motor1_pin2), -100)
-    set_motor_speed((motor2_pin1, motor2_pin2), -100)
+    motor_left.backward()
+    motor_right.backward()
 
 # Function to turn the robot left
 def turn_left():
-    set_motor_speed((motor1_pin1, motor1_pin2), -100)
-    set_motor_speed((motor2_pin1, motor2_pin2), 100)
+    motor_left.backward()
+    motor_right.forward()
 
 # Function to turn the robot right
 def turn_right():
-    set_motor_speed((motor1_pin1, motor1_pin2), 100)
-    set_motor_speed((motor2_pin1, motor2_pin2), -100)
+    motor_left.forward()
+    motor_right.backward()
 
 # Function to stop the robot
 def stop_robot():
-    set_motor_speed((motor1_pin1, motor1_pin2), 0)
-    set_motor_speed((motor2_pin1, motor2_pin2), 0)
+    motor_left.stop()
+    motor_right.stop()
 
 def detect_initial_color():
-    cap = cv2.VideoCapture(1, cv2.CAP_DSHOW)
+    cap = cv2.VideoCapture(0)
     detected_color = None
 
     try:
@@ -103,7 +79,7 @@ def detect_initial_color():
         cv2.destroyAllWindows()
 
 def follow_line_and_detect_qr(processed_qr_codes):
-    cap = cv2.VideoCapture(1, cv2.CAP_DSHOW)
+    cap = cv2.VideoCapture(0)
     qr_detector = cv2.QRCodeDetector()
     try:
         while True:
@@ -208,4 +184,4 @@ if __name__ == "__main__":
     try:
         main()
     except KeyboardInterrupt:
-        GPIO.cleanup()
+        pass
