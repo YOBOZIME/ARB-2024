@@ -122,3 +122,14 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+"""sudo apt-get update
+sudo apt-get install build-essential cmake pkg-config
+sudo apt-get install libjpeg-dev libtiff-dev libjasper-dev libpng-dev
+sudo apt-get install libavcodec-dev libavformat-dev libswscale-dev libv4l-dev
+sudo apt-get install libxvidcore-dev libx264-dev
+sudo apt-get install libfontconfig1-dev libcairo2-dev
+sudo apt-get install libgdk-pixbuf2.0-dev libpango1.0-dev
+sudo apt-get install libgtk2.0-dev libgtk-3-dev
+sudo apt-get install libatlas-base-dev gfortran
+sudo apt-get install python3-dev"""
